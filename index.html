@@ -1,0 +1,845 @@
+
+
+リスト4.1 
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Ball : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(0.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(0.0f, 0.0f, 0.0f);
+    private Vector3 P = new Vector3();
+    private Vector3 V = new Vector3();
+    public float t = 0.0f;
+    public float g = -9.80665f;
+    public int A = 2;
+    public int n = 0;
+
+    // Use this for initialization
+    void Start()
+    {
+        P = P0;　　　　　　　　　　　　//  位置を初期化
+        V = V0;　　　　　　　　　　　　//  速度を初期化
+        transform.position = P;　　  　　　//  球を初期位置へ移動
+
+        Debug.Log("t =" + t);
+        Debug.Log("V.y =" + V.y);
+        Debug.Log("P.y =" + P.y);
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1;　　　　　　
+        t = t + 0.1f;　　　　　　　　
+        V.y = g * t + V0.y;                                       //  y速度を算出
+        P.y = 0.5f * g * t * t + V0.y * t + P0.y;　//  y位置を算出①
+
+        transform.position = P;　　                    // ①により球を移動
+
+        Debug.Log("t =" + t);
+        Debug.Log("V.y =" + V.y);
+        Debug.Log("P.y =" + P.y);
+
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+リスト4.2
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Ball : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(0.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(0.0f, 0.0f, 0.0f);
+　private Vector3 P = new Vector3();
+    private Vector3 V = new Vector3();
+    public float g = -9.80665f;
+    public float dt = 0.01f;
+    public float t = 0.0f;
+    public int n = 0;
+    public int A = 20;
+
+    // Use this for initialization
+    void Start()
+    {
+        P = P0;                                // 位置を初期化
+        V = V0;                                // 速度を初期化
+        transform.position = P;   //  球を初期位置へ移動
+
+        Debug.Log("t =" + t);
+        Debug.Log("V.y =" + V.y);
+        Debug.Log("P.y =" + P.y);
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1;
+        t = t + dt;
+        P.y = P.y + V.y * dt;　   　// y位置を算出①
+        V.y = V.y + g * dt;              //  y速度を算出
+
+        transform.position = P;　//  ①により球を移動
+
+        Debug.Log("t =" + t);
+        Debug.Log("V.y =" + V.y);
+        Debug.Log("P.y =" + P.y);
+
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+リスト5.1 
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Ball : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(0.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(1.0f, 0.0f, 0.0f);
+    private Vector3 P = new Vector3();
+    public float t = 0.0f;
+    public int A = 20;
+    public int n = 0;
+
+    // Use this for initialization
+    void Start()
+    {
+        P = P0;                                             　　  //  位置を初期化
+        transform.position = P;　　　　　　　　//  球を初期位置へ移動
+
+        Debug.Log("t =" + t);
+        Debug.Log("P.x =" + P.x);
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1;
+        t = t + 0.1f;
+
+        P.x = V0.x * t + P0.x;　　　　　　　　　　　//  x位置を算出①
+
+        transform.position = P;　　　　　　　　　//  ①により球を移動
+
+        Debug.Log("t =" + t);
+        Debug.Log("P.x =" + P.x);
+
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+リスト5.2
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Ball : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(0.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(1.0f, 0.0f, 0.0f);
+    private Vector3 P = new Vector3();
+    public float dt = 0.1f;
+    public float t = 0.0f;
+    public int n = 0;
+    public int A = 20;
+
+    // Use this for initialization
+    void Start()
+    {
+        P = P0;                     
+
+        transform.position = P;
+
+        Debug.Log("t =" + t);
+        Debug.Log("P.x =" + P.x);
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1;
+        t = t + dt;
+
+        P.x = P.x + V0.x * dt;
+     
+        transform.position = P;
+
+        Debug.Log("t =" + t);
+        Debug.Log("P.x =" + P.x);
+
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+リスト6.1 
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Ball : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(0.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(20.0f, 20.0f, 0.0f);
+    private Vector3 P =new Vector3();
+    private Vector3 V =new Vector3();
+    public float t = 0.0f;
+    public float g = -9.80665f;
+    public int A = 2;
+    public int n = 0;
+
+    // Use this for initialization
+    void Start()
+    {
+        P = P0;　　　　　　　　　　　　　//  位置を初期化
+        transform.position = P;　　　　　　  //  球を初期位置へ移動
+
+        Debug.Log("t =" + t);
+        Debug.Log("P.x =" + P.x);
+        Debug.Log("P.y =" + P.y);
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1;
+        t = t + 0.1f;
+
+        P.x = V0.x * t + P0.x;　　　　　　　　//  x位置を算出①
+        P.y = 0.5f * g * t * t + V0.y * t + P0.y;　  //  y位置を算出②
+        transform.position = P;                              //  ①、②により球を移動
+
+        Debug.Log("t =" + t);
+        Debug.Log("P.x =" + P.x);
+        Debug.Log("P.y =" + P.y);
+
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+リスト6.2
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Ball : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(0.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(20.0f, 20.0f, 0.0f);
+    private Vector3 P =new Vector3();
+    private Vector3 V =new Vector3();
+    public float g = -9.80665f;
+    public float dt = 0.01f;
+    public float t = 0.0f;
+    public int n = 0;
+    public int A = 20;
+
+    // Use this for initialization
+    void Start()
+    {
+        P = P0;                     　　　　　 // 位置を初期化
+        V = V0;                     　　　　　 // 速度を初期化
+        transform.position = P;　  　　// 球を初期位置へ移動
+
+        Debug.Log("t =" + t);
+        Debug.Log("P.x =" + P.x);
+        Debug.Log("P.y =" + P.y);
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1;
+        t = t + dt;
+
+        P.x = P.x + V0.x * dt;                         //  x位置を算出①
+        P.y = P.y + V.y * dt;　　　　　　//  y位置を算出②
+        V.y = V.y + g * dt;　　　　　　   //  y速度を算出
+        transform.position = P;　　　  　//  ①、②により球を移動
+
+        Debug.Log("t =" + t);
+        Debug.Log("P.x =" + P.x);
+        Debug.Log("P.y =" + P.y);
+
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+リスト7.1-1 
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hit1_1 : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(-20.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(0.1f, 0.0f, 0.0f);
+    private Vector3 P = new Vector3();
+    private Vector3 V = new Vector3();
+
+    public float dt = 1.0f;
+    public int A = 30;
+    public int n = 0;
+    public Renderer rend;
+    public Color colorHit = Color.red;
+    GameObject target;
+
+    // Use this for initialization
+    void Start()
+    {
+        rend = GetComponent<Renderer>();
+        target = GameObject.Find("Sphere2");
+
+        P = P0;
+        V = V0;
+        transform.position = P;
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1;
+        P.x = P.x + V.x * dt;
+        P.y = P.y + V.y * dt;
+        transform.position = P;
+
+        Vector3 Delta = transform.position - target.transform.position;
+        float Dist = Delta.x * Delta.x + Delta.y * Delta.y + Delta.z * Delta.z;
+
+        if (Dist < (1.0f * 1.0f))
+        {
+            rend.material.color = colorHit;
+            Time.timeScale = 0;
+        }
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+リスト7.1-2
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hit1_2 : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(0.0f, 20.0f, 0.0f);
+    public Vector3 V0 = new Vector3(0.0f, -0.1f, 0.0f);
+    private Vector3 P = new Vector3();
+    private Vector3 V = new Vector3();
+
+    public float dt = 1.0f;
+    public int A = 30;
+    public int n = 0;
+    public Renderer rend;
+    public Color colorHit = Color.red;
+    GameObject target;
+
+    // Use this for initialization
+    void Start()
+    {
+        rend = GetComponent<Renderer>();
+        target = GameObject.Find("Sphere1");
+
+        P = P0;
+        V = V0;
+        transform.position = P;
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1;
+        P.x = P.x + V.x * dt;
+        P.y = P.y + V.y * dt;
+        transform.position = P;
+
+        Vector3 Delta = transform.position - target.transform.position;
+        float Dist = Delta.x * Delta.x + Delta.y * Delta.y + Delta.z * Delta.z;
+
+        if (Dist < (1.0f * 1.0f))
+        {
+            rend.material.color = colorHit;
+            Time.timeScale = 0;
+        }
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+リスト7.2-1
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hit2_1 : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(-12.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(0.015f, 0.00866f, 0.0f);
+    private Vector3 P = new Vector3();
+    private Vector3 V = new Vector3();
+
+    public float dt = 1.0f;
+    public int A = 70 ;
+    public int n = 0 ;
+    public Renderer rend;
+    public Color colorHit = Color.red;
+    GameObject target;
+
+    // Use this for initialization
+    void Start()
+    {
+        rend = GetComponent<Renderer>();
+        target = GameObject.Find("Sphere2");
+
+        P = P0;
+        V = V0;
+        transform.position = P;
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1 ;
+        P.x = P.x + V.x * dt;
+        P.y = P.y + V.y * dt;
+        transform.position = P;
+
+        Vector3 Delta = transform.position - target.transform.position;
+        float Dist = Delta.x * Delta.x + Delta.y * Delta.y + Delta.z * Delta.z;
+
+        if (Dist < (1.0f * 1.0f))
+        {
+            rend.material.color = colorHit;
+             Time.timeScale=0;
+        }
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+リスト7.2-2
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hit2_2 : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(12.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(-0.015f, 0.00866f, 0.0f);
+    private Vector3 P = new Vector3();
+    private Vector3 V = new Vector3();
+
+    public float dt = 1.0f;
+    public int A = 70 ;
+    public int n = 0 ;
+    public Renderer rend;
+    public Color colorHit = Color.red;
+    GameObject target;
+
+    // Use this for initialization
+    void Start()
+    {
+        rend = GetComponent<Renderer>();
+        target = GameObject.Find("Sphere1");
+
+        P = P0;
+        V = V0;
+        transform.position = P;
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1 ;
+        P.x = P.x + V.x * dt;
+        P.y = P.y + V.y * dt;
+        transform.position = P;
+
+        Vector3 Delta = transform.position - target.transform.position;
+        float Dist = Delta.x * Delta.x + Delta.y * Delta.y + Delta.z * Delta.z;
+
+        if (Dist < (1.0f * 1.0f))
+        {
+            rend.material.color = colorHit;
+             Time.timeScale=0;
+        }
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+リスト7.3-1
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hit3_1 : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(-20.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(0.2f, 0.2f, 0.0f);
+    private Vector3 P = new Vector3();
+    private Vector3 V = new Vector3();
+    public float g = -0.006f;
+    public float dt = 0.1f;
+    public int A = 50 ;
+    public int n = 0 ;
+    public Renderer rend;
+    public Color colorHit = Color.red;
+    GameObject target;
+
+    // Use this for initialization
+    void Start()
+    {
+        rend = GetComponent<Renderer>();
+        target = GameObject.Find("Sphere2");
+
+        P = P0;                      // 位置を初期化
+        V = V0;                      // 速度を初期化
+        transform.position = P;
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1 ;
+        V.y = V.y + g * dt;
+
+        P.x = P.x + V.x * dt;
+        P.y = P.y + V.y * dt;
+
+        transform.position = P;
+
+        Vector3 Delta = transform.position - target.transform.position;
+        float Dist = Delta.x * Delta.x + Delta.y * Delta.y + Delta.z * Delta.z;
+
+        if (Dist < (1.0f * 1.0f))
+        {
+            rend.material.color = colorHit;
+             Time.timeScale=0;
+        }
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+リスト7.3-2
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hit3_2 : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(0.0f, 20.0f, 0.0f);
+    public Vector3 V0 = new Vector3(0.0f, 0.0f, 0.0f);
+    private Vector3 P = new Vector3();
+    private Vector3 V = new Vector3();
+    public float g = -0.006f;
+    public float dt = 0.1f;
+    public int A = 50 ;
+    public int n = 0 ;
+    public Renderer rend;
+    public Color colorHit = Color.red;
+    GameObject target;
+
+    // Use this for initialization
+    void Start()
+    {
+        rend = GetComponent<Renderer>();
+        target = GameObject.Find("Sphere1");
+
+        P = P0;                      // 位置を初期化
+        V = V0;                      // 速度を初期化
+        transform.position = P;
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1 ;
+        V.y = V.y + g * dt;
+
+        P.x = P.x + V.x * dt;
+        P.y = P.y + V.y * dt;
+
+        transform.position = P;
+
+        Vector3 Delta = transform.position - target.transform.position;
+        float Dist = Delta.x * Delta.x + Delta.y * Delta.y + Delta.z * Delta.z;
+
+        if (Dist < (1.0f * 1.0f))
+        {
+            rend.material.color = colorHit;
+             Time.timeScale=0;
+        }
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+リスト7.4-1
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hit4_1 : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(-12.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(0.15f, 0.32475f, 0.0f);
+    private Vector3 P = new Vector3();
+    private Vector3 V = new Vector3();
+    public float g = -0.006f;
+    public float dt = 0.1f;
+    public int A = 50 ;
+    public int n = 0 ;
+    public Renderer rend;
+    public Color colorHit = Color.red;
+    GameObject target;
+
+    // Use this for initialization
+    void Start()
+    {
+        rend = GetComponent<Renderer>();
+        target = GameObject.Find("Sphere2");
+
+        P = P0;                      // 位置を初期化
+        V = V0;                      // 速度を初期化
+        transform.position = P;
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1 ;
+        V.y = V.y + g * dt;
+
+        P.x = P.x + V.x * dt;
+        P.y = P.y + V.y * dt;
+
+        transform.position = P;
+
+        Vector3 Delta = transform.position - target.transform.position;
+        float Dist = Delta.x * Delta.x + Delta.y * Delta.y + Delta.z * Delta.z;
+
+        if (Dist < (1.0f * 1.0f))
+        {
+            rend.material.color = colorHit;
+             Time.timeScale=0;
+        }
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+リスト7.4-2
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hit4_2 : MonoBehaviour
+{
+    public Vector3 P0 = new Vector3(12.0f, 0.0f, 0.0f);
+    public Vector3 V0 = new Vector3(-0.15f, 0.32475f, 0.0f);
+    private Vector3 P = new Vector3();
+    private Vector3 V = new Vector3();
+    public float g = -0.006f;
+    public float dt = 0.1f;
+    public int A = 50 ;
+    public int n = 0 ;
+    public Renderer rend;
+    public Color colorHit = Color.red;
+    GameObject target;
+
+    // Use this for initialization
+    void Start()
+    {
+        rend = GetComponent<Renderer>();
+        target = GameObject.Find("Sphere1");
+
+        P = P0;                      // 位置を初期化
+        V = V0;                      // 速度を初期化
+        transform.position = P;
+
+        var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.Translate(P.x, P.y, P.z);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        n = n + 1 ;
+        V.y = V.y + g * dt;
+
+        P.x = P.x + V.x * dt;
+        P.y = P.y + V.y * dt;
+
+        transform.position = P;
+
+        Vector3 Delta = transform.position - target.transform.position;
+        float Dist = Delta.x * Delta.x + Delta.y * Delta.y + Delta.z * Delta.z;
+
+        if (Dist < (1.2f * 1.2f))
+        {
+            rend.material.color = colorHit;
+             Time.timeScale=0;
+        }
+        if (n % A == 0)
+        {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            obj.transform.Translate(P.x, P.y, P.z);
+        }
+    }
+}
+
+
+---------------------------------------------------------------------------------------------------------------------------
